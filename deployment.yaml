@@ -5,7 +5,7 @@ spring:
     serialization:
       write-dates-as-timestamps: false
        
-application:
+application: 
   title: employee management Application
   description:  employee management Application
   version: v0.0.1
