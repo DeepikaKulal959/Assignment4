@@ -1,0 +1,14 @@
+spring:
+  application:
+     name: employee management
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+       
+application:
+  title: employee management Application
+  description:  employee management Application
+  version: v0.0.1
+
+server:
+  port: 8080
