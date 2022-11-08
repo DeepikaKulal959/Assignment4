@@ -1,12 +1,12 @@
 apiVersion: apps/v1
-kind: Deployment                  # Kubernetes resource kind we are creating
+kind: Deployment                         # Kubernetes resource kind we are creating
 metadata:
   name: spring-test-app
 spec:
   selector:
     matchLabels:
       app: spring-test-app
-  replicas: 2                     # Number of replicas that will be created for this deployment
+  replicas: 2                            # Number of replicas that will be created for this deployment
   template:
     metadata:
       labels:
