@@ -1,0 +1,85 @@
+package com.example.springcrud.controller;
+
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.when;
+
+import com.example.springcrud.entity.Employee;
+import com.example.springcrud.repository.EmployeeRepository;
+import com.example.springcrud.service.EmployeeService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.util.Optional;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+@ContextConfiguration(classes = {EmployeeController.class, EmployeeService.class})
+@ExtendWith(SpringExtension.class)
+class EmployeeControllerTest {
+    @Autowired
+    private EmployeeController employeeController;
+
+    @MockBean
+    private EmployeeRepository employeeRepository;
+
+    /**
+     * Method under test: {@link EmployeeController#addEmployee(Employee)}
+     */
+    @Test
+    void testAddEmployee() throws Exception {
+        // Arrange
+        Employee employee = new Employee();
+        employee.setAge(1);
+        employee.setId(1);
+        employee.setName("Name");
+        employee.setStatus("Status");
+        String content = (new ObjectMapper()).writeValueAsString(employee);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/employees")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content);
+
+        // Act
+        ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(employeeController)
+                .build()
+                .perform(requestBuilder);
+
+        // Assert
+        actualPerformResult.andExpect(MockMvcResultMatchers.status().is(405));
+    }
+
+    /**
+     * Method under test: {@link EmployeeController#getEmployee(int)}
+     */
+    @Test
+    void testGetEmployee() throws Exception {
+        // Arrange
+        Employee employee = new Employee();
+        employee.setAge(1);
+        employee.setId(1);
+        employee.setName("Name");
+        employee.setStatus("Status");
+        Optional<Employee> ofResult = Optional.of(employee);
+        when(employeeRepository.findById((Integer) any())).thenReturn(ofResult);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/employees/{id}", 1);
+
+        // Act and Assert
+        MockMvcBuilders.standaloneSetup(employeeController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+                .andExpect(
+                        MockMvcResultMatchers.content().string("{\"id\":1,\"name\":\"Name\",\"age\":1,\"status\":\"Status\"}"));
+    }
+}
+
