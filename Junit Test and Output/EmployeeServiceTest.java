@@ -80,16 +80,7 @@ class EmployeeServiceTest {
     @Test
     @Disabled("TODO: Complete this test")
     void testGetEmployee2() {
-        // TODO: Complete this test.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   java.util.NoSuchElementException: No value present
-        //       at java.util.Optional.get(Optional.java:143)
-        //       at com.example.springcrud.service.EmployeeService.getEmployee(EmployeeService.java:22)
-        //   See https://diff.blue/R013 to resolve this issue.
-
-        // Arrange
+       
         when(employeeRepository.findById((Integer) any())).thenReturn(Optional.empty());
 
         // Act
@@ -135,15 +126,7 @@ class EmployeeServiceTest {
     @Test
     @Disabled("TODO: Complete this test")
     void testUpdate2() {
-        // TODO: Complete this test.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   java.util.NoSuchElementException: No value present
-        //       at java.util.Optional.get(Optional.java:143)
-        //       at com.example.springcrud.service.EmployeeService.update(EmployeeService.java:27)
-        //   See https://diff.blue/R013 to resolve this issue.
-
+       
         // Arrange
         Employee employee = new Employee();
         employee.setAge(1);
@@ -176,22 +159,10 @@ class EmployeeServiceTest {
         verify(employeeRepository).deleteById((Integer) any());
     }
 
-    /**
-     * Methods under test:
-     *
-     * <ul>
-     *   <li>default or parameterless constructor of {@link EmployeeService}
-     *   <li>{@link EmployeeService#setEmployeeRepository(EmployeeRepository)}
-     * </ul>
-     */
+   
     @Test
     void testConstructor() {
-        // TODO: Complete this test.
-        //   Reason: R002 Missing observers.
-        //   Diffblue Cover was unable to create an assertion.
-        //   Add getters for the following fields or make them package-private:
-        //     EmployeeService.employeeRepository
-
+       
         // Arrange and Act
         (new EmployeeService()).setEmployeeRepository(mock(EmployeeRepository.class));
     }
